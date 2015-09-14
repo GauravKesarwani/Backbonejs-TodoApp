@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Marionette Contact Manager</title>
+    <link href="./assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="./assets/css/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+    <link href="./assets/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app-container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Skills <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Project</a></li>
+                        <li><a href="#">Resume</a></li>
+                        <li><a href="#">Contact Me</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+        <div class="container" id="main-region">
+            <p>Here is static content in the web page. You'll notice that it gets replaced by our app as soon as we start it.</p>
+        </div>
+        <div id="dialog-region"></div>
+    </div>
+
+    <!-- Layout template -->
+    <script type="text/template" id="task-list-layout">
+      <div id="panel-region"></div>
+      <div id="tasks-region"></div>
+    </script>
+
+    <script type="text/template" id="task-list-panel">
+        <button class="btn btn-primary js-new">Create Task</button>
+    </script>
+    <!-- task item template -->
+    <script type="text/template" id="task-list-item">
+        <td>
+            <%- id %>
+        </td>
+        <td>
+            <%- taskName %>
+        </td>
+        <td>
+            <%- taskPriority %>
+        </td>
+        <td>
+            <a href="#tasks/<%- id %>" class="btn btn-small js-show">
+                <i class="icon-eye-open"></i>
+                Show
+            </a>
+            <a href="#contacts/<%- id %>/edit" class="btn btn-small js-edit">
+                <i class="icon-pencil"></i>
+                Edit
+            </a>
+            <a class="btn btn-small js-delete">
+                <i class="icon-remove"></i>
+                Delete
+            </a>
+        </td>
+    </script>
+
+    <script type="text/template" id="missing-task-view">
+        <div class="alert alert-error">This task does not exists</div>
+    </script>
+    <!-- task list tamplate -->
+    <script type="text/template" id="task-list">
+        <thead>
+        <tr>
+            <th>Task Id</th>
+            <th>Task Name</th>
+            <th>Task Priority</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </script>
+
+    <script type="text/template" id="task-view">
+    <table>
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Task Id</td>
+                <td>
+                    <%- id %>
+                </td>
+            </tr>
+            <tr>
+                <td>Task Name</td>
+                <td>
+                    <%- taskName %>
+                </td>
+            </tr>
+            <tr>
+                <td>Task Priority</td>
+                <td>
+                    <%- taskPriority %>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <a href="#" class="btn btn-small js-edit">
+        <i class="icon-pencil"></i>
+        Edit this task
+    </a>
+    <a href="#tasks"> Show All Tasks </a>
+    </script>
+
+    <!-- Template to edit task -->
+    <script type="text/template" id="task-form">
+        <h1>Edit <%- taskName %> </h1>
+        <form>
+            <div class="form-group">
+                <label for="task-taskName" class="control-label">
+                    Task Name:</label>
+                <input id="task-taskName" name="taskName" type="text" value="<%- taskName %>" /> 
+            </div>
+            <div class="form-group">
+                <label for="task-taskPriority" class="control-label">
+                    Task Priority:</label>
+                <input id="task-taskPriority" name="taskPriority" type="text" value="<%- taskPriority %>" /> 
+            </div>
+            <button class="btn js-submit">Save</button>
+        </form>
+    </script>
+
+    <script type="text/template" id="loading-view">
+        <h1><%- title %></h1>
+        <p><%- message %></p>
+        <div id="spinner"></div>
+    </script>
+
+    <!-- Load the libraries -->
+    <script src="./assets/js/vendor/jquery.js"></script>
+    <script src="./assets/js/vendor/jquery-ui-1.10.3.js"></script>
+    <!--script src="./assets/js/vendor/modal.js"></script-->
+    <script src="./assets/js/vendor/json2.js"></script>
+    <script src="./assets/js/vendor/underscore.js"></script>
+    <script src="./assets/js/vendor/backbone.js"></script>
+    <script src="./assets/js/vendor/backbone.picky.js"></script>
+    <script src="./assets/js/vendor/backbone.syphon.js"></script>
+    <script src="./assets/js/vendor/spin.js"></script>
+    <script src="./assets/js/vendor/spin.jquery.js"></script>
+    <script src="./assets/js/vendor/backbone.localstorage.js"></script>
+    <script src="./assets/js/vendor/backbone.marionette.js"></script>
+    
+    <!--script data-main="main.js" src="./assets/js/vendor/requirejs/require.js"></script-->
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/taskapp/TasksApp.js"></script>
+    <script src="./assets/js/taskapp/common/views.js"></script>
+    <script src="./assets/js/taskapp/config/storage/localstorage.js"></script>
+    <script src="./assets/js/taskapp/entities/tasks.js"></script>
+    <script src="./assets/js/taskapp/views/list_view.js"></script>
+    <script src="./assets/js/taskapp/views/show_view.js"></script>
+    <script src="./assets/js/taskapp/views/edit_view.js"></script>
+    <script src="./assets/js/taskapp/views/common/loading_view.js"></script>
+    <script src="./assets/js/taskapp/controllers/list_controller.js"></script>
+    <script src="./assets/js/taskapp/controllers/show_controller.js"></script>
+    <script src="./assets/js/taskapp/controllers/edit_controller.js"></script>
+    <script>
+        App.start();
+    </script>
+</body>
+
+</html>

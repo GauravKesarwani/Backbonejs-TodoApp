@@ -1,0 +1,16 @@
+{
+  "name": "bower.json",
+  "version": "0.0.0",
+  "authors": [
+    "Gaurav Kesarwani"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "requirejs": "2.1.16",
+    "jquery": "1.9.1",
+    "underscore": "1.8.3",
+    "json2": "",
+    "marionette": "2.4.2"
+    
+  }
+}
